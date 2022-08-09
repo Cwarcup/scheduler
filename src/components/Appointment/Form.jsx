@@ -8,6 +8,18 @@ function Form(props) {
     props.interviewer || null
   );
 
+  // clear form values
+  const reset = () => {
+    setStudent("");
+    setInterviewer(null);
+  };
+
+  // when user clicks cancel button
+  const cancel = () => {
+    reset();
+    props.onCancel();
+  };
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -22,17 +34,17 @@ function Form(props) {
           />
         </form>
         <InterviewerList
-          value={props.interviewer}
+          value={interviewer}
           interviewers={props.interviewers}
-          onChange={setInterviewer}
+          onChange={(e) => setInterviewer(e)}
         />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={props.onCancel()}>
+          <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button confirm onClick={props.onSave()}>
+          <Button confirm onClick={props.onSave}>
             Save
           </Button>
         </section>
