@@ -1,6 +1,6 @@
-import React from 'react';
-import '../styles/DayListItem.scss';
-import classNames from 'classnames';
+import React from "react";
+import "../styles/DayListItem.scss";
+import classNames from "classnames";
 
 // responsible for providing the name of the day and the number of remaining spots
 
@@ -16,9 +16,11 @@ export default function DayListItem(props) {
   };
 
   const dayClass = classNames(
-    'day-list__item',
-    { 'day-list__item--selected': props.selected },
-    { 'day-list__item--full': props.spots === 0 }
+    "day-list__item",
+    {
+      "day-list__item--selected": props.selected,
+    },
+    { "day-list__item--full": props.spots === 0 }
   );
 
   return (
@@ -27,6 +29,7 @@ export default function DayListItem(props) {
       onClick={() => {
         props.setDay(props.name);
       }}
+      selected={props.selected}
     >
       <h2 className="text--regular">Day {props.name}</h2>
       <h3 className="text--light">{formatSpots(props.spots)}</h3>
