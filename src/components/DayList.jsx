@@ -1,5 +1,5 @@
-import React from 'react';
-import DayListItem from './DayListItem';
+import React from "react";
+import DayListItem from "./DayListItem.jsx";
 
 function DayList(props) {
   let dayArr = [];
