@@ -1,12 +1,9 @@
-/* eslint-disable array-callback-return */
 import React from "react";
 import DayListItem from "./DayListItem.jsx";
 
 function DayList(props) {
-  let dayArr = [];
-
-  props.days.map((day) => {
-    dayArr.push(
+  const dayArr = props.days.map((day) => {
+    return (
       <DayListItem
         key={day.id}
         name={day.name}
