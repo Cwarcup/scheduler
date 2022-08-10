@@ -18,7 +18,3 @@ function DayList(props) {
 }
 
 export default DayList;
-
-// days:Array an array of objects
-// day:String
-// setDay:Function

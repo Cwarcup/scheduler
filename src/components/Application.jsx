@@ -21,16 +21,16 @@ export default function Application(props) {
     setState((prev) => ({ ...prev, appointments }));
 
   useEffect(() => {
+    // use Promise.all() for multiple async calls
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       // axios.get("/api/interviewers"),
     ])
       .then((res) => {
-        // console.log(res[0].data); // days
-        // console.log(res[1].data); // appointments
-        // console.log(res[2].data); // interviewers
+        // res is an array of responses, index corresponds to the async call
 
+        // set state of all states in the state object
         setState((prev) => ({
           ...prev,
           days: res[0].data,
@@ -40,8 +40,8 @@ export default function Application(props) {
       .catch((err) => console.log(err));
   }, []);
 
+  // get appointments for the given day, use helper function. Returns an array of appointments.
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  // create array of appointments for the day
   const appointmentArr = dailyAppointments.map((app) => {
     return <Appointment key={app.id} {...app} />;
   });
