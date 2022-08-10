@@ -25,11 +25,12 @@ export default function Application(props) {
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
-      // axios.get("/api/interviewers"),
+      axios.get("/api/interviewers"),
     ])
       .then((res) => {
         // res is an array of responses, index corresponds to the async call
 
+        console.log(res[2].data);
         // set state of all states in the state object
         setState((prev) => ({
           ...prev,
@@ -41,9 +42,16 @@ export default function Application(props) {
   }, []);
 
   // get appointments for the given day, use helper function. Returns an array of appointments.
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-  const appointmentArr = dailyAppointments.map((app) => {
-    return <Appointment key={app.id} {...app} />;
+  const appointments = getAppointmentsForDay(state, state.day);
+  const schedule = appointments.map((appointment) => {
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={appointment.interview}
+      />
+    );
   });
 
   return (
@@ -68,10 +76,7 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">
-        {appointmentArr}
-        <Appointment key="last" time="5pm" />
-      </section>
+      <section className="schedule">{schedule}</section>
     </main>
   );
 }
