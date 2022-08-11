@@ -61,16 +61,20 @@ export function getInterviewersForDay(state, day) {
       }
     }
   }
+  console.log(interviewersArr);
 
   return interviewersArr;
 }
 // returns:
 // [
-//   { id: 4, time: '3pm', interview: null },
 //   {
-//     id: 5,
-//     time: '4pm',
-//     interview: { student: 'Chad Takahashi', interviewer: 2 }
+//     id: 1,
+//     name: 'Sylvia Palmer',
+//     avatar: 'https://i.imgur.com/LpaY82x.png'
+//   },
+//   {
+//     id: 2,
+//     name: 'Tori Malcolm',
+//     avatar: 'https://i.imgur.com/Nmx0Qxo.png'
 //   }
 // ]
-
