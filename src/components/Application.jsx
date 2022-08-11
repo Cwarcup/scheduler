@@ -1,14 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import "../styles/Application.scss";
 
 import DayList from "./DayList.jsx";
 import Appointment from "components/Appointment";
-import axios from "axios";
 import {
   getAppointmentsForDay,
   getInterview,
+  getInterviewersForDay,
 } from "../helpers/selectors.jsx";
 
 export default function Application(props) {
@@ -47,6 +48,12 @@ export default function Application(props) {
   // get appointments for the given day, use helper function. Returns an array of appointments.
   const appointments = getAppointmentsForDay(state, state.day);
 
+  // array of interviewers for a given day
+  const interviewersForDay = getInterviewersForDay(
+    state,
+    state.interviewers
+  );
+
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
@@ -57,6 +64,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={interviewersForDay}
       />
     );
   });

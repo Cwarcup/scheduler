@@ -18,6 +18,7 @@ const Appointment = (props) => {
   );
 
   console.log("mode", mode);
+  console.log("Appointment props", props);
 
   return (
     <article className="appointment">
@@ -31,7 +32,9 @@ const Appointment = (props) => {
         />
       )}
 
-      {mode === CREATE && <Form interviewers={[]} onCancel={back} />}
+      {mode === CREATE && (
+        <Form interviewers={props.interviewers} onCancel={back} />
+      )}
     </article>
   );
 };

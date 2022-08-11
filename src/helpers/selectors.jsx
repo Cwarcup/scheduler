@@ -55,9 +55,9 @@ export function getInterviewersForDay(state, day) {
 
   // compare foundDay's id matches the id of states.appointments
   if (foundDay) {
-    for (const appointment of foundDay.appointments) {
-      if (appointment === state.appointments[appointment].id) {
-        interviewersArr.push(state.appointments[appointment]);
+    for (const interviewer of foundDay.interviewers) {
+      if (interviewer === state.interviewers[interviewer].id) {
+        interviewersArr.push(state.interviewers[interviewer]);
       }
     }
   }
@@ -73,3 +73,4 @@ export function getInterviewersForDay(state, day) {
 //     interview: { student: 'Chad Takahashi', interviewer: 2 }
 //   }
 // ]
+
