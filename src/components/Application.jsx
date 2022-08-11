@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+
 import "../styles/Application.scss";
 
 import DayList from "./DayList.jsx";
@@ -44,6 +45,7 @@ export default function Application(props) {
   const appointments = getAppointmentsForDay(state, state.day);
 
   const schedule = appointments.map((appointment) => {
+
     return (
       <Appointment
         key={appointment.id}
