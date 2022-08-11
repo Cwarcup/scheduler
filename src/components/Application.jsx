@@ -30,7 +30,6 @@ export default function Application(props) {
       .then((res) => {
         // res is an array of responses, index corresponds to the async call
 
-        console.log(res[2].data);
         // set state of all states in the state object
         setState((prev) => ({
           ...prev,
@@ -43,6 +42,7 @@ export default function Application(props) {
 
   // get appointments for the given day, use helper function. Returns an array of appointments.
   const appointments = getAppointmentsForDay(state, state.day);
+
   const schedule = appointments.map((appointment) => {
     return (
       <Appointment
