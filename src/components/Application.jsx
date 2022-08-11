@@ -13,7 +13,7 @@ import {
 
 export default function Application(props) {
   const [state, setState] = useState({
-    day: "Monday", //!! may be causing issue using getInterview
+    day: "Monday",
     days: [],
     appointments: {},
   });
@@ -46,11 +46,10 @@ export default function Application(props) {
 
   // get appointments for the given day, use helper function. Returns an array of appointments.
   const appointments = getAppointmentsForDay(state, state.day);
-  console.log("state", state);
 
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    console.log(interview);
+
     return (
       <Appointment
         {...appointment}

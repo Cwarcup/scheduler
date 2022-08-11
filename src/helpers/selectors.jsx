@@ -45,3 +45,31 @@ export function getInterview(state, interview) {
   // return it all as a new object
   return { student, interviewer: interviewerObj };
 }
+
+//  provide the list of interviewers to the Form component
+export function getInterviewersForDay(state, day) {
+  let interviewersArr = [];
+
+  // id of the appointment
+  const foundDay = state.days.find(({ name }) => name === day);
+
+  // compare foundDay's id matches the id of states.appointments
+  if (foundDay) {
+    for (const appointment of foundDay.appointments) {
+      if (appointment === state.appointments[appointment].id) {
+        interviewersArr.push(state.appointments[appointment]);
+      }
+    }
+  }
+
+  return interviewersArr;
+}
+// returns:
+// [
+//   { id: 4, time: '3pm', interview: null },
+//   {
+//     id: 5,
+//     time: '4pm',
+//     interview: { student: 'Chad Takahashi', interviewer: 2 }
+//   }
+// ]
