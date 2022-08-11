@@ -8,11 +8,8 @@ function Form(props) {
     props.interviewer || null
   );
 
-  console.log("Form props", props.interviewers);
-
   // clear form values
   const reset = () => {
-    console.log("reset");
     setStudent("");
     setInterviewer(null);
   };

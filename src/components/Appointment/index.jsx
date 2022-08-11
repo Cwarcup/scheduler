@@ -17,9 +17,6 @@ const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
-  console.log("mode", mode);
-  console.log("Appointment props", props);
-
   return (
     <article className="appointment">
       <Header time={props.time} />

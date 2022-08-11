@@ -1,11 +1,8 @@
 // The function will return an array of appointments for the given day.
-// getAppointmentsForDay returns:
-// [ { id: 1, time: "12pm", interview: null }, ... ]
 export function getAppointmentsForDay(state, day) {
   let appointmentArr = [];
 
-  // id of the appointment
-  const foundDay = state.days.find(({ name }) => name === day);
+  const foundDay = state.days.find(({ name }) => name === day); // id of the appointment
 
   // compare foundDay's id matches the id of states.appointments
   if (foundDay) {
@@ -20,22 +17,11 @@ export function getAppointmentsForDay(state, day) {
 }
 
 // will return an object that contains the interview data
-// if it is passed an object that contains an interviewer.
-// getInterview returns:
-// {
-//   "student": "Lydia Miller-Jones",
-//   "interviewer": {
-//     "id": 1,
-//     "name": "Sylvia Palmer",
-//     "avatar": "https://i.imgur.com/LpaY82x.png"
-//   }
-// }
 export function getInterview(state, interview) {
   if (!interview) {
     return null;
   }
 
-  // interviewer is an id
   // student is string of the student's name
   const { student, interviewer } = interview;
 
@@ -50,10 +36,8 @@ export function getInterview(state, interview) {
 export function getInterviewersForDay(state, day) {
   let interviewersArr = [];
 
-  // id of the appointment
   const foundDay = state.days.find(({ name }) => name === day);
 
-  // compare foundDay's id matches the id of states.appointments
   if (foundDay) {
     for (const interviewer of foundDay.interviewers) {
       if (interviewer === state.interviewers[interviewer].id) {
@@ -61,20 +45,6 @@ export function getInterviewersForDay(state, day) {
       }
     }
   }
-  console.log(interviewersArr);
 
   return interviewersArr;
 }
-// returns:
-// [
-//   {
-//     id: 1,
-//     name: 'Sylvia Palmer',
-//     avatar: 'https://i.imgur.com/LpaY82x.png'
-//   },
-//   {
-//     id: 2,
-//     name: 'Tori Malcolm',
-//     avatar: 'https://i.imgur.com/Nmx0Qxo.png'
-//   }
-// ]

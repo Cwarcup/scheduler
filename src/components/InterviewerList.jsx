@@ -3,7 +3,6 @@ import "../styles/InterviewerList.scss";
 import InterviewerListItem from "./InterviewerListItem.jsx";
 
 function InterviewerList(props) {
-  console.log("InterviewerList props", props);
   //build an array and insert InterviewerListItem for each interviewer
   const interviewerArr = props.interviewers.map((int) => {
     return (
