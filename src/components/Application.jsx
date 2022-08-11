@@ -1,17 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-
 import "../styles/Application.scss";
 
 import DayList from "./DayList.jsx";
 import Appointment from "components/Appointment";
 import axios from "axios";
-import { getAppointmentsForDay } from "../helpers/selectors.jsx";
+import {
+  getAppointmentsForDay,
+  getInterview,
+} from "../helpers/selectors.jsx";
 
 export default function Application(props) {
   const [state, setState] = useState({
-    day: "Monday",
+    day: "Monday", //!! may be causing issue using getInterview
     days: [],
     appointments: {},
   });
@@ -36,6 +38,7 @@ export default function Application(props) {
           ...prev,
           days: res[0].data,
           appointments: res[1].data,
+          interviewers: res[2].data,
         }));
       })
       .catch((err) => console.log(err));
@@ -43,15 +46,18 @@ export default function Application(props) {
 
   // get appointments for the given day, use helper function. Returns an array of appointments.
   const appointments = getAppointmentsForDay(state, state.day);
+  console.log("state", state);
 
   const schedule = appointments.map((appointment) => {
-
+    const interview = getInterview(state, appointment.interview);
+    console.log(interview);
     return (
       <Appointment
+        {...appointment}
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={appointment.interview}
+        interview={interview}
       />
     );
   });
