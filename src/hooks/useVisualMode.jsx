@@ -12,6 +12,7 @@ export default function useVisualMode(initial) {
       replacedHistory[replacedHistory.length - 1] = nextMode; //replace the last element in the array with the nextMode
 
       setMode(nextMode); //update the mode state
+
       setHistory([...replacedHistory]); //update the history state
     } else {
       setMode(nextMode);

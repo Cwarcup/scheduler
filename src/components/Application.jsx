@@ -44,8 +44,8 @@ export default function Application(props) {
       .catch((err) => console.log(err));
   }, []);
 
-  //!! working here
-  const bookInterview = (id, interview) => {
+  // async call to server to update the appointment
+  const bookInterview = async (id, interview) => {
     // copy the interview object
     const appointment = {
       ...state.appointments[id],
@@ -57,14 +57,33 @@ export default function Application(props) {
       [id]: appointment,
     };
 
-    console.log("appointment", appointment);
-    console.log("appointments", appointments);
-
-    //!! update state with new appointment
     setState((prev) => ({
       ...prev,
       appointments: appointments,
     }));
+
+    const data = {
+      interview: {
+        student: interview.student,
+        interviewer: interview.interviewer,
+      },
+    };
+
+    // PUT request to update appointment with new interview using axios
+    // endpoint is appointment ID
+    const putRequestData = new Promise((resolve, reject) => {
+      axios
+        .put(`/api/appointments/${id}`, data)
+        .then((res) => {
+          setState((prev) => ({
+            ...prev,
+            appointments: appointments,
+          }));
+          resolve(res);
+        })
+        .catch((err) => reject(err));
+    });
+    return putRequestData;
   };
 
   // get appointments for the given day, use helper function. Returns an array of appointments.

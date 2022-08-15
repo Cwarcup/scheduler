@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 import Header from "./Header.jsx";
 import Show from "./Show.jsx";
 import Empty from "./Empty.jsx";
 import Form from "./Form.jsx";
+import Status from "./Status";
 
 import useVisualMode from "../../hooks/useVisualMode";
 
@@ -12,23 +13,28 @@ const Appointment = (props) => {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
+  const SAVING = "SAVING";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
   // !! save function seems to be working
-  const save = (name, interviewer) => {
+  function save(name, interviewer) {
+    transition(SAVING);
     const interview = {
       student: name,
       interviewer,
     };
-    // console.log("SAVE", interview);
-    // console.log("props.id", props.id);
-
-    props.bookInterview(props.id, interview);
-    transition(SHOW); // transition to SHOW mode with the new interview
-  };
+    props
+      .bookInterview(props.id, interview)
+      .then((res) => {
+        transition(SHOW);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <article className="appointment">
@@ -49,6 +55,8 @@ const Appointment = (props) => {
           onSave={save}
         />
       )}
+
+      {mode === SAVING && <Status message="Saving" />}
     </article>
   );
 };
