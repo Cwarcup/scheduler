@@ -17,16 +17,18 @@ const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
-  // !! save function
+  // !! save function seems to be working
   const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer,
     };
-    props.bookInterview(props.id, interview);
-  };
+    // console.log("SAVE", interview);
+    // console.log("props.id", props.id);
 
-  console.log("appointment props", props);
+    props.bookInterview(props.id, interview);
+    transition(SHOW); // transition to SHOW mode with the new interview
+  };
 
   return (
     <article className="appointment">

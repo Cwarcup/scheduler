@@ -44,13 +44,31 @@ export default function Application(props) {
       .catch((err) => console.log(err));
   }, []);
 
+  //!! working here
   const bookInterview = (id, interview) => {
-    console.log("book interview", id, interview);
+    // copy the interview object
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    console.log("appointment", appointment);
+    console.log("appointments", appointments);
+
+    //!! update state with new appointment
+    setState((prev) => ({
+      ...prev,
+      appointments: appointments,
+    }));
   };
 
   // get appointments for the given day, use helper function. Returns an array of appointments.
   const appointments = getAppointmentsForDay(state, state.day);
-  console.log("appointments", appointments);
 
   // array of interviewers for a given day. Passed to Appointment component.
   const interviewersForDay = getInterviewersForDay(state, state.day);
