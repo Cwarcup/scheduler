@@ -17,20 +17,16 @@ const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
-  // TODO: change local state when we book an interview
-  const bookInterview = (id, interview) => {
-    console.log(id, interview);
-  };
-
- // ?? Passed to Form component to get interviewer, student and run bookInterview function
+  // !! save function
   const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer,
     };
-    bookInterview(props.id, interview);
+    props.bookInterview(props.id, interview);
   };
-  console.log("bookInterview", bookInterview);
+
+  console.log("appointment props", props);
 
   return (
     <article className="appointment">

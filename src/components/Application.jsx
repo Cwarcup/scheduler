@@ -44,6 +44,9 @@ export default function Application(props) {
       .catch((err) => console.log(err));
   }, []);
 
+  const bookInterview = (id, interview) => {
+    console.log("book interview", id, interview);
+  };
 
   // get appointments for the given day, use helper function. Returns an array of appointments.
   const appointments = getAppointmentsForDay(state, state.day);
@@ -62,6 +65,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewersForDay}
+        bookInterview={bookInterview}
       />
     );
   });
