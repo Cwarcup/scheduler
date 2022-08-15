@@ -6,6 +6,7 @@ import Show from "./Show.jsx";
 import Empty from "./Empty.jsx";
 import Form from "./Form.jsx";
 import Status from "./Status";
+import Confirm from "./Confirm.jsx";
 
 import useVisualMode from "../../hooks/useVisualMode";
 
@@ -14,6 +15,10 @@ const Appointment = (props) => {
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
+  const DELETING = "DELETING";
+  const CONFIRM = "CONFIRM";
+
+  console.log("appointment props", props);
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -28,12 +33,31 @@ const Appointment = (props) => {
     };
     props
       .bookInterview(props.id, interview)
-      .then((res) => {
+      .then(() => {
         transition(SHOW);
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function trashInterview() {
+    if (mode === CONFIRM) {
+      // if in confirm mode
+      transition(DELETING); // transition to deleting mode
+
+      props // only delete if in confirm mode
+        .cancelInterview()
+        .then(() => {
+          transition(EMPTY);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // if not in confirm mode, transition to confirm mode
+      transition(CONFIRM);
+    }
   }
 
   return (
@@ -45,8 +69,18 @@ const Appointment = (props) => {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={() => trashInterview()}
         />
       )}
+
+      {mode === CONFIRM && (
+        <Confirm
+          message={"Delete the appointment?"}
+          onCancel={() => transition(SHOW)}
+          onConfirm={trashInterview}
+        />
+      )}
+      {mode === DELETING && <Status message="Deleting" />}
 
       {mode === CREATE && (
         <Form

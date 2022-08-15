@@ -44,6 +44,34 @@ export default function Application(props) {
       .catch((err) => console.log(err));
   }, []);
 
+  // !! delete interview function
+  // ?? use appointment id to delete interview
+  const cancelInterview = async (id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    const deletePromise = new Promise((resolve, reject) => {
+      axios
+        .delete(`/api/appointments/${id}`)
+        .then((res) => {
+          setState({
+            ...state,
+            appointments,
+          });
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+    return deletePromise;
+  };
+
   // async call to server to update the appointment
   const bookInterview = async (id, interview) => {
     // copy the interview object
@@ -103,6 +131,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewersForDay}
         bookInterview={bookInterview}
+        cancelInterview={() => cancelInterview(appointment.id)}
       />
     );
   });

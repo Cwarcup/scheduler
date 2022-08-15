@@ -1,6 +1,7 @@
 import React from "react";
 
 function Show(props) {
+  console.log("show props", props);
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
