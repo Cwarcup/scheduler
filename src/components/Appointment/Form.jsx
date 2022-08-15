@@ -8,6 +8,8 @@ function Form(props) {
     props.interviewer || null
   );
 
+  console.log("Form props", props);
+
   // clear form values
   const reset = () => {
     setStudent("");
@@ -19,6 +21,8 @@ function Form(props) {
     reset();
     props.onCancel();
   };
+
+  //
 
   return (
     <main className="appointment__card appointment__card--create">

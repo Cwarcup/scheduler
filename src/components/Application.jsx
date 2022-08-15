@@ -15,6 +15,7 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     appointments: {},
+    interviewers: {},
   });
 
   const setDay = (day) => setState({ ...state, day });
@@ -43,8 +44,10 @@ export default function Application(props) {
       .catch((err) => console.log(err));
   }, []);
 
+
   // get appointments for the given day, use helper function. Returns an array of appointments.
   const appointments = getAppointmentsForDay(state, state.day);
+  console.log("appointments", appointments);
 
   // array of interviewers for a given day. Passed to Appointment component.
   const interviewersForDay = getInterviewersForDay(state, state.day);
@@ -54,7 +57,6 @@ export default function Application(props) {
     const interview = getInterview(state, appointment.interview);
     return (
       <Appointment
-        {...appointment}
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
