@@ -17,9 +17,6 @@ function useApplicationData(initialState) {
   const setAppointments = (appointments) =>
     setState((prev) => ({ ...prev, appointments }));
 
-  // // !! // returns the day of the week you are on
-  // console.log("day", state.day);
-
   useEffect(() => {
     // use Promise.all() for multiple async calls
     Promise.all([
@@ -41,16 +38,6 @@ function useApplicationData(initialState) {
       .catch((err) => console.log(err));
   }, [initialState]);
 
-  // get the ID of the day you are on
-  // const getCurrentDayID = function (id) {
-  //   // loop over the days array and find the day that matches the id
-  //   for (let i = 0; i < state.days.length; i++) {
-  //     if (state.days[i].appointments.includes(id)) {
-  //       return i;
-  //     }
-  //   }
-  // };
-
   const updateSpots = function (id, state) {
     // find the day using the id
     const currentDay = state.days.find((day) =>
@@ -70,13 +57,14 @@ function useApplicationData(initialState) {
       return day.name === state.day ? newDay : day;
     });
 
+    // update the state
     setState({ ...state, days: newDays });
 
     return newDays;
   };
 
   // trash the appointment
-  const cancelInterview = async (id) => {
+  const cancelInterview = (id) => {
     // set the appointment to null for a given id
     const appointment = {
       ...state.appointments[id],
@@ -97,8 +85,9 @@ function useApplicationData(initialState) {
 
     const url = `/api/appointments/${id}`;
 
-    await axios.delete(url);
-    updateSpots(id, newState); // update the state
+    return axios.delete(url).then(() => {
+      updateSpots(id, newState);
+    }); // update the state
   };
 
   // create a new appointment
