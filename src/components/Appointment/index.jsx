@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from "react";
+import React from "react";
 import "./styles.scss";
 import Header from "./Header.jsx";
 import Show from "./Show.jsx";
@@ -17,6 +17,7 @@ const Appointment = (props) => {
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
 
   console.log("appointment props", props);
 
@@ -59,6 +60,11 @@ const Appointment = (props) => {
       transition(CONFIRM);
     }
   }
+  const edit = () => {
+    console.log("edit mode");
+    transition(EDIT);
+    console.log("props.interview.student", props.interview.student);
+  };
 
   return (
     <article className="appointment">
@@ -70,6 +76,7 @@ const Appointment = (props) => {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => trashInterview()}
+          onEdit={() => edit()}
         />
       )}
 
@@ -87,6 +94,16 @@ const Appointment = (props) => {
           interviewers={props.interviewers}
           onCancel={back}
           onSave={save}
+        />
+      )}
+
+      {mode === EDIT && (
+        <Form
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={save}
+          name={props.interview.student}
+          interviewer={props.interview.interviewer.id}
         />
       )}
 

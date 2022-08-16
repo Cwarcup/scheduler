@@ -8,6 +8,8 @@ function Form(props) {
     props.interviewer || null
   );
 
+  console.log("form props", props);
+
   // clear form values
   const reset = () => {
     setStudent("");
@@ -31,10 +33,9 @@ function Form(props) {
         >
           <input
             className="appointment__create-input text--semi-bold"
-            name="name"
             type="text"
             placeholder="Enter Student Name"
-            value={student}
+            value={student || props.name}
             onChange={(e) => setStudent(e.target.value)}
           />
         </form>
