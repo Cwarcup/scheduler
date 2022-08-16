@@ -120,7 +120,7 @@ const Appointment = (props) => {
           interviewers={props.interviewers}
           onCancel={back}
           onSave={save}
-          name={props.interview.student}
+          student={props.interview.student}
           interviewer={props.interview.interviewer.id}
         />
       )}
