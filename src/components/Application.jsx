@@ -46,7 +46,7 @@ export default function Application(props) {
 
   // !! delete interview function
   // ?? use appointment id to delete interview
-  const cancelInterview = async (id) => {
+  const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
       interview: null,
@@ -73,7 +73,7 @@ export default function Application(props) {
   };
 
   // async call to server to update the appointment
-  const bookInterview = async (id, interview) => {
+  const bookInterview = (id, interview) => {
     // copy the interview object
     const appointment = {
       ...state.appointments[id],

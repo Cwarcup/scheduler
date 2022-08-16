@@ -7,6 +7,7 @@ import Empty from "./Empty.jsx";
 import Form from "./Form.jsx";
 import Status from "./Status";
 import Confirm from "./Confirm.jsx";
+import Error from "./Error";
 
 import useVisualMode from "../../hooks/useVisualMode";
 
@@ -18,6 +19,8 @@ const Appointment = (props) => {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   console.log("appointment props", props);
 
@@ -38,7 +41,8 @@ const Appointment = (props) => {
         transition(SHOW);
       })
       .catch((err) => {
-        console.log(err);
+        // if error, set  ERROR_SAVE
+        transition(ERROR_SAVE, true);
       });
   }
 
@@ -53,7 +57,8 @@ const Appointment = (props) => {
           transition(EMPTY);
         })
         .catch((err) => {
-          console.log(err);
+          // if error, ERROR_DELETE
+          transition(ERROR_DELETE, true);
         });
     } else {
       // if not in confirm mode, transition to confirm mode
@@ -69,6 +74,21 @@ const Appointment = (props) => {
   return (
     <article className="appointment">
       <Header time={props.time} />
+
+      {mode === ERROR_SAVE && (
+        <Error
+          onClose={() => back()}
+          message="Could not save appointment"
+        />
+      )}
+
+      {mode === ERROR_DELETE && (
+        <Error
+          onClose={() => back()}
+          message="Could not delete appointment"
+        />
+      )}
+
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 
       {mode === SHOW && (
