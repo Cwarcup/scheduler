@@ -17,6 +17,9 @@ function useApplicationData(initialState) {
   const setAppointments = (appointments) =>
     setState((prev) => ({ ...prev, appointments }));
 
+  // !! // returns the day of the week you are on
+  console.log("day", state.day);
+
   useEffect(() => {
     // use Promise.all() for multiple async calls
     Promise.all([
@@ -36,7 +39,7 @@ function useApplicationData(initialState) {
         }));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [initialState]);
 
   const cancelInterview = (id) => {
     const appointment = {
@@ -51,16 +54,28 @@ function useApplicationData(initialState) {
       axios
         .delete(`/api/appointments/${id}`)
         .then((res) => {
+          const newSpots = state.days.map((day) => {
+            if (day.name === appointment.day) {
+              return {
+                spots: day.spots - 1,
+              };
+            } else {
+              return day;
+            }
+          });
+          console.log("newSpots", newSpots);
           setState({
             ...state,
             appointments,
           });
+
           resolve(res);
         })
         .catch((err) => {
           reject(err);
         });
     });
+
     return deletePromise;
   };
 
@@ -76,6 +91,10 @@ function useApplicationData(initialState) {
       ...state.appointments,
       [id]: appointment,
     };
+
+    console.log("inside");
+    console.log("appointment", appointment);
+    console.log("id", id);
 
     setState((prev) => ({
       ...prev,
@@ -105,6 +124,8 @@ function useApplicationData(initialState) {
     });
     return putRequestData;
   };
+
+  console.log("state.days", state.days);
 
   return {
     state,

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
-  console.log("history", history);
 
   //update the mode state with the new value.
   //  When replace is true then set the history to reflect that we are replacing the current mode.
@@ -37,6 +36,7 @@ export default function useVisualMode(initial) {
       setMode(newHistory[newHistory.length - 1]); // set the mode to the last item in the array.
     }
   };
+
 
   return {
     mode,
