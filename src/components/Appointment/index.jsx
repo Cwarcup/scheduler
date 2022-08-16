@@ -12,6 +12,7 @@ import Error from "./Error";
 import useVisualMode from "../../hooks/useVisualMode";
 
 const Appointment = (props) => {
+  console.log("appopintment props", props);
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
