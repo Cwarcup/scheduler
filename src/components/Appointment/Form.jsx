@@ -40,8 +40,8 @@ function Form(props) {
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
+          onSubmit={(event) => {
+            event.preventDefault();
           }}
           autoComplete="off"
           data-testid="form"
@@ -52,7 +52,7 @@ function Form(props) {
             name="name"
             placeholder="Enter Student Name"
             value={student}
-            onChange={(e) => setStudent(e.target.value)}
+            onChange={(event) => setStudent(event.target.value)}
             data-testid="student-name-input"
           />
         </form>
@@ -61,12 +61,12 @@ function Form(props) {
         <InterviewerList
           value={interviewer}
           interviewers={props.interviewers}
-          onChange={(e) => setInterviewer(e)}
+          onChange={setInterviewer}
         />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={() => cancel()}>
+          <Button danger onClick={cancel}>
             Cancel
           </Button>
           <Button confirm onClick={validate}>
