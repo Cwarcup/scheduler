@@ -28,13 +28,14 @@ const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
-  // !! save function seems to be working
   function save(name, interviewer) {
-    transition(SAVING);
     const interview = {
       student: name,
       interviewer,
     };
+
+    transition(SAVING);
+
     props
       .bookInterview(props.id, interview)
       .then(() => {
@@ -66,9 +67,7 @@ const Appointment = (props) => {
     }
   }
   const edit = () => {
-    console.log("edit mode");
     transition(EDIT);
-    console.log("props.interview.student", props.interview.student);
   };
 
   return (

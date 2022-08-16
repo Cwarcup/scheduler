@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
+  console.log("history", history);
 
   //update the mode state with the new value.
   //  When replace is true then set the history to reflect that we are replacing the current mode.
