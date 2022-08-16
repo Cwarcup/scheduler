@@ -17,8 +17,8 @@ function useApplicationData(initialState) {
   const setAppointments = (appointments) =>
     setState((prev) => ({ ...prev, appointments }));
 
-  // !! // returns the day of the week you are on
-  console.log("day", state.day);
+  // // !! // returns the day of the week you are on
+  // console.log("day", state.day);
 
   useEffect(() => {
     // use Promise.all() for multiple async calls
@@ -41,47 +41,68 @@ function useApplicationData(initialState) {
       .catch((err) => console.log(err));
   }, [initialState]);
 
-  const cancelInterview = (id) => {
+  // get the ID of the day you are on
+  // const getCurrentDayID = function (id) {
+  //   // loop over the days array and find the day that matches the id
+  //   for (let i = 0; i < state.days.length; i++) {
+  //     if (state.days[i].appointments.includes(id)) {
+  //       return i;
+  //     }
+  //   }
+  // };
+
+  const updateSpots = function (id, state) {
+    // find the day using the id
+    const currentDay = state.days.find((day) =>
+      day.appointments.includes(id)
+    );
+
+    // find number of spots available for the day
+    const nullAppointments = currentDay.appointments.filter(
+      (id) => !state.appointments[id].interview
+    );
+    // set spots to the number of null appointments
+    const spots = nullAppointments.length;
+
+    // copy, but don't mutate the state
+    const newDay = { ...currentDay, spots };
+    const newDays = state.days.map((day) => {
+      return day.name === state.day ? newDay : day;
+    });
+
+    setState({ ...state, days: newDays });
+
+    return newDays;
+  };
+
+  // trash the appointment
+  const cancelInterview = async (id) => {
+    // set the appointment to null for a given id
     const appointment = {
       ...state.appointments[id],
       interview: null,
     };
+
+    // create the appointment with the null interview
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-    const deletePromise = new Promise((resolve, reject) => {
-      axios
-        .delete(`/api/appointments/${id}`)
-        .then((res) => {
-          const newSpots = state.days.map((day) => {
-            if (day.name === appointment.day) {
-              return {
-                spots: day.spots - 1,
-              };
-            } else {
-              return day;
-            }
-          });
-          console.log("newSpots", newSpots);
-          setState({
-            ...state,
-            appointments,
-          });
 
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+    // new state object
+    const newState = {
+      ...state,
+      appointments,
+    };
 
-    return deletePromise;
+    const url = `/api/appointments/${id}`;
+
+    await axios.delete(url);
+    updateSpots(id, newState); // update the state
   };
 
-  // async call to server to update the appointment
-  const bookInterview = (id, interview) => {
-    // copy the interview object
+  // create a new appointment
+  const bookInterview = async (id, interview) => {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -92,14 +113,12 @@ function useApplicationData(initialState) {
       [id]: appointment,
     };
 
-    console.log("inside");
-    console.log("appointment", appointment);
-    console.log("id", id);
+    const newState = {
+      ...state,
+      appointments,
+    };
 
-    setState((prev) => ({
-      ...prev,
-      appointments: appointments,
-    }));
+    const url = `/api/appointments/${id}`;
 
     const data = {
       interview: {
@@ -108,24 +127,10 @@ function useApplicationData(initialState) {
       },
     };
 
-    // PUT request to update appointment with new interview using axios
-    // endpoint is appointment ID
-    const putRequestData = new Promise((resolve, reject) => {
-      axios
-        .put(`/api/appointments/${id}`, data)
-        .then((res) => {
-          setState((prev) => ({
-            ...prev,
-            appointments: appointments,
-          }));
-          resolve(res);
-        })
-        .catch((err) => reject(err));
+    return axios.put(url, data).then(() => {
+      updateSpots(id, newState);
     });
-    return putRequestData;
   };
-
-  console.log("state.days", state.days);
 
   return {
     state,
