@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/InterviewerList.scss";
 import InterviewerListItem from "./InterviewerListItem.jsx";
+import PropTypes from "prop-types";
 
 function InterviewerList(props) {
   //build an array and insert InterviewerListItem for each interviewer
@@ -25,5 +26,9 @@ function InterviewerList(props) {
     </section>
   );
 }
+
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired,
+};
 
 export default InterviewerList;
