@@ -70,13 +70,34 @@ function useApplicationData(initialState) {
       ...state.appointments[id],
       interview: null,
     };
-
     // create the appointment with the null interview
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
+    // new state object
+    const newState = {
+      ...state,
+      appointments,
+    };
+    const url = `/api/appointments/${id}`;
+    return axios.delete(url).then(() => {
+      updateSpots(id, newState);
+    });
+  };
 
+  // create a new appointment
+  const bookInterview = (id, interview) => {
+    // create new single appointment object
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+    // create appointments with the new interview
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
     // new state object
     const newState = {
       ...state,
@@ -85,38 +106,7 @@ function useApplicationData(initialState) {
 
     const url = `/api/appointments/${id}`;
 
-    return axios.delete(url).then(() => {
-      updateSpots(id, newState);
-    }); // update the state
-  };
-
-  // create a new appointment
-  const bookInterview = async (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview },
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment,
-    };
-
-    const newState = {
-      ...state,
-      appointments,
-    };
-
-    const url = `/api/appointments/${id}`;
-
-    const data = {
-      interview: {
-        student: interview.student,
-        interviewer: interview.interviewer,
-      },
-    };
-
-    return axios.put(url, data).then(() => {
+    return axios.put(url, appointment).then(() => {
       updateSpots(id, newState);
     });
   };
