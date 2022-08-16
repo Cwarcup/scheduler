@@ -33,6 +33,7 @@ function Form(props) {
       return;
     }
 
+    setError("");
     props.onSave(student, interviewer);
   }
 
@@ -44,7 +45,6 @@ function Form(props) {
             event.preventDefault();
           }}
           autoComplete="off"
-          data-testid="form"
         >
           <input
             className="appointment__create-input text--semi-bold"
