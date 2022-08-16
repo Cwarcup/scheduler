@@ -28,7 +28,7 @@ const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
-  function save(name, interviewer) {
+  const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer,
@@ -45,12 +45,12 @@ const Appointment = (props) => {
         // if error, set  ERROR_SAVE
         transition(ERROR_SAVE, true);
       });
-  }
+  };
 
-  function trashInterview() {
+  const trashInterview = () => {
     if (mode === CONFIRM) {
       // if in confirm mode
-      transition(DELETING); // transition to deleting mode
+      transition(DELETING, true); // transition to deleting mode
 
       props // only delete if in confirm mode
         .cancelInterview()
@@ -65,7 +65,8 @@ const Appointment = (props) => {
       // if not in confirm mode, transition to confirm mode
       transition(CONFIRM);
     }
-  }
+  };
+
   const edit = () => {
     transition(EDIT);
   };
