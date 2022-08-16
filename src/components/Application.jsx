@@ -16,10 +16,6 @@ export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
 
-  //!! days?
-  // set the state of the day to the day that is passed in as a prop
-  // console.log(state.days);
-
   // array of interviewers for a given day. Passed to Appointment component.
   const interviewersForDay = getInterviewersForDay(state, state.day);
 
@@ -64,7 +60,10 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{schedule}</section>
+      <section className="schedule">
+        {schedule}
+        <Appointment key="last" time="5pm" />
+      </section>
     </main>
   );
 }
