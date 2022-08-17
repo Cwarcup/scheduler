@@ -13,7 +13,7 @@ import useApplicationData from "../hooks/useApplicationData";
 
 export default function Application(props) {
   // setup initial state from useApplicationData hook
-  const { state, bookInterview, cancelInterview } =
+  const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
 
   // array of interviewers for a given day. Passed to Appointment component.
