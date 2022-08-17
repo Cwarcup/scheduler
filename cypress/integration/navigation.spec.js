@@ -1,10 +1,6 @@
 /* eslint-disable no-undef */
 // describe("My first Cypress tests", () => {
 
-// 	beforeEach(() => {
-// 		cy.visit("/");
-// 	})
-
 //   it("true is true", () => {
 //     assert.equal(true, true);
 //   });
@@ -19,6 +15,10 @@
 // 		.should('not.be.checked')
 // 	})
 // });
+// beforeEach(() => {
+//   cy.visit("http://localhost:8001/api/debug/reset");
+// });
+
 describe("Navigation", () => {
   it("should visit root", () => {
     cy.visit("/");
