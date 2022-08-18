@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
@@ -36,7 +36,6 @@ export default function useVisualMode(initial) {
       setMode(newHistory[newHistory.length - 1]); // set the mode to the last item in the array.
     }
   };
-
 
   return {
     mode,

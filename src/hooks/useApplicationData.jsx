@@ -1,7 +1,4 @@
-// responsible for loading the initial data from the API
-// provides the actions to update the state, causing the component to render
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function useApplicationData(initialState) {
@@ -13,9 +10,6 @@ function useApplicationData(initialState) {
   });
 
   const setDay = (day) => setState({ ...state, day });
-  const setDays = (days) => setState((prev) => ({ ...prev, days }));
-  const setAppointments = (appointments) =>
-    setState((prev) => ({ ...prev, appointments }));
 
   useEffect(() => {
     // use Promise.all() for multiple async calls
