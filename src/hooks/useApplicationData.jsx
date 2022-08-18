@@ -81,9 +81,6 @@ function useApplicationData(initialState) {
       return day.name === state.day ? newDay : day;
     });
 
-    // update the state
-    dispatch({ type: SET_DAYS, value: newDays });
-
     return newDays;
   };
 
