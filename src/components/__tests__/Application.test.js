@@ -20,17 +20,6 @@ import Application from "components/Application";
 afterEach(cleanup);
 
 describe("Application", () => {
-  //?? will NOT be using promises in this test, so we can use the async keyword
-  // it("defaults to Monday and changes the schedule when a new day is selected", () => {
-  //   const { getByText } = render(<Application />);
-
-  //   return waitForElement(() => getByText("Monday")).then(() => {
-  //     fireEvent.click(getByText("Tuesday"));
-  //     expect(getByText("Leopold Silvers")).toBeInTheDocument();
-  //   });
-  // });
-
-  // async version
   it("changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />);
 
