@@ -7,7 +7,7 @@ function useApplicationData(initialState) {
   const SET_INTERVIEW = "SET_INTERVIEW";
   const SET_DAYS = "SET_DAYS";
 
-  function reducer(state, action) {
+  const reducer = (state, action) => {
     switch (action.type) {
       case SET_DAY:
         return { ...state, day: action.value };
@@ -29,18 +29,29 @@ function useApplicationData(initialState) {
           `Tried to reduce with unsupported action type: ${action.type}`
         );
     }
-  }
+  };
 
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {},
+    socket: null,
   });
 
   const setDay = (day) => dispatch({ type: SET_DAY, value: day });
 
   useEffect(() => {
+    // initial setup
+    state.socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    state.socket.onmessage = (event) => {
+      // Listen for the "SET_INTERVIEW" messages on the client.
+      if (event.data.type === "SET_INTERVIEW") {
+        dispatch({ type: SET_INTERVIEW, value: event.data.value });
+      }
+    };
+
     // use Promise.all() for multiple async calls
     Promise.all([
       axios.get("/api/days"),
@@ -60,7 +71,7 @@ function useApplicationData(initialState) {
         });
       })
       .catch((err) => console.log(err));
-  }, [initialState]);
+  }, [initialState, state.socket]);
 
   const updateSpots = function (id, state) {
     // find the day using the id
