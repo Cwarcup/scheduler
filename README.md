@@ -29,3 +29,13 @@ npm start
 - [Jest](https://jestjs.io/)
 - [Storybook](https://storybook.js.org/)
 - [Prop-Types](https://reactjs.org/docs/typechecking-with-proptypes.html)
+
+## Server Endpoints
+
+- GET [/api/days](https://lhl-scheduler-server.herokuapp.com/api/days/)
+- GET [/api/appointments](https://lhl-scheduler-server.herokuapp.com/api/appointments/)
+- GET [/api/interviewers](https://lhl-scheduler-server.herokuapp.com/api/interviewers/)
+- PUT /api/appointments/:id
+- DELETE /api/appointments/:id
+
+Server repository can be found here: [scheduler-api](https://github.com/Cwarcup/scheduler-api)

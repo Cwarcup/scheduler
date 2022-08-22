@@ -49,7 +49,7 @@ function useApplicationData(initialState) {
         });
       })
       .catch((err) => console.log(err));
-  }, [initialState, state.socket]);
+  }, [initialState, state]);
 
   const updateSpots = function (id, state) {
     // find the day using the id
